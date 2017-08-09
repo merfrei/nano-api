@@ -3,7 +3,7 @@ from setuptools import setup
 setup(name='nano_api',
       version='0.1',
       description='Custom and simple API utils to be used in conjunction with Flask and Flask-Restful',
-      url='http://github.com/merfrei/nano_api',
+      url='http://github.com/merfrei/nano-api',
       author='Emiliano M. Rudenick',
       author_email='emr.frei@gmail.com',
       license='MIT',
