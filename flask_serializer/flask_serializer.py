@@ -26,7 +26,7 @@ class Serializer(object):
         self._relationships = self.get_relationships()
 
     def get_attributes(self):
-        return NotImplemented
+        raise NotImplementedError
 
     def get_relationships(self):
         return {}

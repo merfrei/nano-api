@@ -30,10 +30,10 @@ class ModelListAPI(Resource):
         raise NotImplementedError
 
     def get_model_class(self):
-        return NotImplemented
+        raise NotImplementedError
 
     def get_db_session(self):
-        return NotImplemented
+        raise NotImplementedError
 
     def get_filters(self):
         # [(<col>, <col_type>, <filter_type>, <exp>), ...]
@@ -123,10 +123,10 @@ class ModelAPI(Resource):
         raise NotImplementedError
 
     def get_model_class(self):
-        return NotImplemented
+        raise NotImplementedError
 
     def get_db_session(self):
-        return NotImplemented
+        raise NotImplementedError
 
     def get(self, ident):
         model_class = self.model_class
