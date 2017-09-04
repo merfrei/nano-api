@@ -204,3 +204,27 @@ class WebsitePageListAPIExtended(WebsitePageListAPI):
     def get_order(self):
         return [WebsitePage.name.asc()]
 ```
+
+routes.py
+
+```python
+    rest = Api(app)
+    rest.add_resource(WebsiteListAPIExtended,
+                      urljoin(API_URL, 'websites'),
+                      endpoint='websites')
+    rest.add_resource(WebsiteAPI,
+                      urljoin(API_URL, 'websites/<int:ident>'),
+                      endpoint='website')
+    rest.add_resource(TagListAPIExtended,
+                      urljoin(API_URL, 'tags'),
+                      endpoint='tags')
+    rest.add_resource(TagAPI,
+                      urljoin(API_URL, 'tags/<int:ident>'),
+                      endpoint='tag')
+    rest.add_resource(WebsitePageListAPIExtended,
+                      urljoin(API_URL, 'pages'),
+                      endpoint='pages')
+    rest.add_resource(WebsitePageAPI,
+                      urljoin(API_URL, 'pages/<int:ident>'),
+                      endpoint='page')
+```
