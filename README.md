@@ -42,7 +42,7 @@ class Tag(db.Model):
                            db.ForeignKey('websites.id', ondelete='cascade'),
                            nullable=False)
     website = db.relationship('Website',
-                              backref=db.backref('extractors', lazy='dynamic'))
+                              backref=db.backref('tags', lazy='dynamic'))
     name = db.Column(db.String(256), nullable=False)
 
     def serialize(self):
@@ -78,8 +78,8 @@ class WebsitePage(db.Model):
                               backref=db.backref('pages', lazy='dynamic'))
     name = db.Column(db.String(256), nullable=False)
     example_url = db.Column(db.String(1024))
-    tags = db.relationship('WebsiteExtractor',
-                           secondary=website_page_extractors,
+    tags = db.relationship('Tag',
+                           secondary=website_page_tags,
                            backref=db.backref('website_pages',
                                               lazy='dynamic'))
 
@@ -182,7 +182,7 @@ class WebsiteListAPIExtended(WebsiteListAPI):
 
 
 class TagListAPIExtended(TagListAPI):
-    """WebsiteExtractorListAPI with extra filters and order"""
+    """TagListAPI with extra filters and order"""
     def get_filters(self):
         return [
             ModelAPIFilter(column='website_id', value_type=int,
@@ -190,7 +190,7 @@ class TagListAPIExtended(TagListAPI):
         ]
 
     def get_order(self):
-        return [WebsiteExtractor.dialect.desc(), WebsiteExtractor.name.asc()]
+        return [Tag.name.asc()]
 
 
 class WebsitePageListAPIExtended(WebsitePageListAPI):
