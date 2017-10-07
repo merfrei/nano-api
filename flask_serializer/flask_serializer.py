@@ -35,7 +35,7 @@ class Serializer(object):
     def _check_valid_attr(attr):
         valid_len = len(attr) == 3
         valid_type = (isinstance(attr[0], str) and
-                      isinstance(attr[1], type) and
+                      callable(attr[1]) and
                       (attr[2] is None or isinstance(attr[2], dict)))
         return (valid_len and valid_type)
 
