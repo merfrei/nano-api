@@ -73,9 +73,9 @@ class ModelListAPI(Resource):
         offset = args.get('_offset')
         limit = args.get('_limit')
         if offset is not None:
-            query.offset(int(offset))
+            query = query.offset(int(offset))
         if limit is not None:
-            query.limit(int(limit))
+            query = query.limit(int(limit))
 
         all_list = []
         count = 0
