@@ -21,6 +21,7 @@ class ModelListAPI(Resource):
         self.serializer.parser_setup(self.parser)
         self.parser.add_argument('_limit', type=int)
         self.parser.add_argument('_offset', type=int)
+        self.parser.add_argument('_sorted', type=str, action='append')
         self.parser.add_argument('_partial', type=bool, default=False)
 
     def create_serializer(self):
@@ -66,9 +67,23 @@ class ModelListAPI(Resource):
                     query = query.filter(
                         getattr(model_class, col_name) == filter_val)
 
-        order = self.get_order()
-        if order:
-            query = query.order_by(*order)
+        sorted_params = args.get('_sorted')
+        if not sorted_params:
+            order = self.get_order()
+            if order:
+                query = query.order_by(*order)
+        else:
+            order = []
+            for s_param in sorted_params:
+                # ie: 'attr,desc'
+                spvls = s_param.split(',')
+                if len(spvls) > 1:
+                    # ie: ['attr', 'desc'] => Model.attr.desc()
+                    order.append(getattr(getattr(model_class, spvls[0]), spvls[1])())
+                else:
+                    order.append(getattr(model_class, spvls[0]))
+            if order:
+                query = query.order_by(*order)
 
         offset = args.get('_offset')
         limit = args.get('_limit')
